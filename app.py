@@ -11,10 +11,11 @@ app = Flask(__name__)
 # ==========================================
 # 1. YOUR MASTER KEYS
 # ==========================================
-CHANNEL_ACCESS_TOKEN = 'qgB71xEndEA+Uimgry0n28QavWQsAEyjFdDDefF7UE33f8lTb0EwEHpE6TjoGxoJhikGWqqs6q88bHNx1XuuddceY1b/nRsyXpfGjbvI+1VfXfu2d/2yFeH3aXCBAQ22YWgGCfL8n12Zmo+VfC8jHQdB04t89/1O/w1cDnyilFU='
-CHANNEL_SECRET = '5350c7202b4ccaaeb9674dec7d3d44b4'
-GEMINI_API_KEY = 'AIzaSyBQ1txJGN5Mut83-h1te2aWN_4kk37ekAA'  
-OPENAI_API_KEY = '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'  # <-- NEW: Paste your OpenAI Key here
+# The keys are now pulled from Render's Environment Variables
+CHANNEL_ACCESS_TOKEN = os.getenv('CHANNEL_ACCESS_TOKEN')
+CHANNEL_SECRET = os.getenv('CHANNEL_SECRET')
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
