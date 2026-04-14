@@ -60,3 +60,37 @@ You can control the chatbot's memory and active brain using the following comman
 
 5.  **Connect the Webhook**:
     Use a proxy tool like `ngrok` (e.g., `ngrok http 5555`) to expose your local server to the internet. Then, add the resulting `.ngrok.app/callback` URL in your LINE Developer Console under the Webhook settings.
+
+---
+
+## 🛠️ Local Setup & Deployment Precautions
+
+### 1. Virtual Environment (`.venv`)
+Use a virtual environment to prevent dependency conflicts between projects:
+```bash
+python -m venv .venv
+# Windows
+.\.venv\Scripts\activate
+# macOS/Linux
+source .venv/bin/activate
+```
+
+### 2. Dependencies
+Install the exact library versions used during development:
+```bash
+pip install -r requirements.txt
+```
+
+### 3. API Keys & Security
+Never hardcode API keys (Gemini, OpenAI, LINE) in the source code.
+* **Local:** Use a `.env` file and ensure it is added to `.gitignore`.
+* **Deployment:** Set environment variables in your cloud hosting dashboard (e.g., Render, Heroku).
+
+### 4. Webhook Configuration
+The LINE Messaging API requires a valid HTTPS Webhook URL ending in `/callback` (e.g., `https://your-domain.com/callback`).
+* **Local Testing:** If using a tunneling service like **ngrok**, remember to update the Webhook URL in the LINE Developer Console every time the service restarts.
+
+### 5. Cloud Hosting Cold Starts
+If deployed on free-tier cloud services (like Render), the server may sleep after periods of inactivity. The initial request to wake the server may take 30–60 seconds to process.
+
+
