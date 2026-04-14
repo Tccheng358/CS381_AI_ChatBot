@@ -1,5 +1,7 @@
 # CS381_AI_ChatBot
 
+BOT Basic ID: @213xfnjr
+
 A powerful LINE Chatbot built with Python and Flask that dynamically switches between multiple AI "brains": **Google Gemini** and **OpenAI (ChatGPT)**. The bot assigns an independent memory session to every user, allowing it to remember conversation history natively based on the chosen AI.
 
 ## Features & Supported APIs (The "Brains")
