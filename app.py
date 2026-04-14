@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, abort
+from flask import Flask, request, abort, jsonify
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
@@ -156,3 +156,42 @@ def handle_message(event):
 
 if __name__ == "__main__":
     app.run(port=5555)
+    
+# ==========================================
+# HW3 REQUIREMENT: RESTful API for History
+# ==========================================
+
+# 1. GET API: Retrieve chat history for Postman screenshot
+@app.route("/history/<user_id>", methods=['GET'])
+def get_history(user_id):
+    if user_id in user_sessions:
+        session = user_sessions[user_id]
+        history_data = []
+        
+        # Format the history for the JSON response
+        # This part depends on the brain used (Gemini vs OpenAI)
+        if session.get('active_brain') == 'gemini':
+            for message in session['gemini_chat'].history:
+                history_data.append({
+                    "role": message.role,
+                    "content": message.parts[0].text
+                })
+        else:
+            history_data = session['openai_messages']
+            
+        return jsonify({"user_id": user_id, "history": history_data}), 200
+    
+    return jsonify({"error": "User not found"}), 404
+
+# 2. DELETE API: Clear history for Postman screenshot
+@app.route("/history/<user_id>", methods=['DELETE'])
+def delete_history(user_id):
+    if user_id in user_sessions:
+        # Reset the memory sessions for this specific user
+        del user_sessions[user_id]
+        return jsonify({
+            "message": "History deleted successfully.",
+            "user_id": user_id
+        }), 200
+        
+    return jsonify({"error": "User not found"}), 404

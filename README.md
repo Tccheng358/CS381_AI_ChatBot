@@ -89,6 +89,9 @@ Never hardcode API keys (Gemini, OpenAI, LINE) in the source code.
 ### 4. Webhook Configuration
 The LINE Messaging API requires a valid HTTPS Webhook URL ending in `/callback` (e.g., `https://your-domain.com/callback`).
 * **Local Testing:** If using a tunneling service like **ngrok**, remember to update the Webhook URL in the LINE Developer Console every time the service restarts.
+```bash
+pip install flask line-bot-sdk google-generativeai openai 
+```
 
 ### 5. Cloud Hosting Cold Starts
 If deployed on free-tier cloud services (like Render), the server may sleep after periods of inactivity. The initial request to wake the server may take 30–60 seconds to process.
